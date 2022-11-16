@@ -14,8 +14,9 @@ def datetime_from_utc_to_local(orig_timestamp):
 def process_event_json_before_sink(event_json):
     try:
         for tmp in event_json['event']['tags']:
-            if tmp['key'] == 'speed_kmph':
-                if tmp['value'] > 20:
+            if tmp['key'] == 'direction':
+                if tmp['value'] == 'EXIT':
+                    tmp['value'] == 'Wrong Direction'
                     event_json['event']['priority'] = 3
                     readable_datetime = str(datetime_from_utc_to_local(int(event_json['info']['event_timestamp'])))
                     readable_time = readable_datetime
